@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Globe, Zap, Cpu, Layers, Box, Wrench, Sparkles, Loader2 } from "lucide-react";
+import { Terminal, Globe, Zap, Cpu, Layers, Box, Wrench, Sparkles, Loader2, Shield, Smartphone } from "lucide-react";
 
 export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () => void }) {
     const [complete, setComplete] = useState(false);
@@ -62,9 +62,9 @@ export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () =
                         <div className="flex flex-col items-center gap-4 text-slate-600 z-30">
                             <div className="flex items-center gap-3 text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-center text-slate-500 font-sans">
                                 {(() => {
-                                    const chapters = ["VOID", "ORIGIN", "PRESSURE", "CONTROL", "SYSTEMS", "SCALE", "TOOLS", "NOW"];
-                                    const icons = [Terminal, Globe, Zap, Cpu, Layers, Box, Wrench, Sparkles]; // Map icons to chapters
-                                    const index = Math.min(Math.floor((progress / 100) * 8), 7);
+                                    const chapters = ["FOUNDATION", "STRUCTURE", "STATE", "OFFLINE", "HARDWARE", "SCALE", "SECURITY", "X-PLATFORM", "PRODUCTION", "REFINEMENT"];
+                                    const icons = [Terminal, Layers, Zap, Globe, Cpu, Box, Shield, Smartphone, Wrench, Sparkles];
+                                    const index = Math.min(Math.floor((progress / 100) * 10), 9);
                                     const CurrentIcon = icons[index];
 
                                     return (
