@@ -4,14 +4,16 @@ import { motion } from "framer-motion";
 import { useHorizontalScroll } from "./HorizontalScroll";
 
 const milestones = [
-    { label: "Void", id: 0 },
-    { label: "Origin", id: 1 },
-    { label: "Pressure", id: 2 },
-    { label: "Control", id: 3 },
-    { label: "Systems", id: 4 },
+    { label: "Foundation", id: 0 },
+    { label: "Structure", id: 1 },
+    { label: "State", id: 2 },
+    { label: "Offline", id: 3 },
+    { label: "Hardware", id: 4 },
     { label: "Scale", id: 5 },
-    { label: "Tools", id: 6 },
-    { label: "Now", id: 7 },
+    { label: "Security", id: 6 },
+    { label: "X-Platform", id: 7 },
+    { label: "Production", id: 8 },
+    { label: "Refinement", id: 9 },
 ];
 
 export default function BottomRuler() {

@@ -6,11 +6,13 @@ import { useRef, useState, useEffect, useCallback, createContext, useContext } f
 // Context to share scroll progress with other components
 interface ScrollContextType {
     progress: number; // 0-1 normalized progress
+    activeIndex: number; // 0-9
     scrollToSection: (sectionIndex: number) => void;
 }
 
 export const HorizontalScrollContext = createContext<ScrollContextType>({
     progress: 0,
+    activeIndex: 0,
     scrollToSection: () => { },
 });
 
@@ -23,6 +25,7 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
     const containerRef = useRef<HTMLDivElement>(null);
     const [singleContentWidth, setSingleContentWidth] = useState(0);
     const [progress, setProgress] = useState(0);
+    const [activeIndex, setActiveIndex] = useState(0);
 
     // Scroll state
     const targetX = useRef(0);
@@ -74,11 +77,15 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
         return value;
     }, []);
 
-    // Scroll to specific section (0-7 for 8 sections)
+    // Scroll to specific section (0-9 for 10 sections)
     const scrollToSection = useCallback((sectionIndex: number) => {
         if (isMobile) {
             // Native vertical scroll for mobile
-            const sectionId = ["void", "origin", "pressure", "control", "systems", "scale", "tools", "now"][sectionIndex];
+            const sectionIds = [
+                "foundation", "architecture", "state", "offline", "hardware",
+                "multiapp", "security", "crossplatform", "production", "refinement"
+            ];
+            const sectionId = sectionIds[sectionIndex];
             const element = document.getElementById(sectionId);
             if (element) {
                 element.scrollIntoView({ behavior: "smooth" });
@@ -87,7 +94,7 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
         }
 
         if (singleContentWidth === 0) return;
-        const sectionWidth = singleContentWidth / 8;
+        const sectionWidth = singleContentWidth / 10;
         const newTarget = -(sectionIndex * sectionWidth);
         targetX.current = wrapValue(newTarget, singleContentWidth);
     }, [singleContentWidth, wrapValue, isMobile]);
@@ -116,6 +123,11 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
                 // Normalize to [0, 1]
                 const normalizedProgress = Math.abs(wrappedCurrent) / singleContentWidth;
                 setProgress(normalizedProgress % 1);
+
+                // Calculate Active Index (0-9)
+                const totalSections = 10;
+                const index = Math.floor((normalizedProgress % 1) * totalSections);
+                setActiveIndex(index);
             }
 
             animationId = requestAnimationFrame(animate);
@@ -197,7 +209,7 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
 
     if (isMobile) {
         return (
-            <HorizontalScrollContext.Provider value={{ progress, scrollToSection }}>
+            <HorizontalScrollContext.Provider value={{ progress, activeIndex, scrollToSection }}>
                 <div className="w-full flex flex-col overflow-x-hidden relative">
                     {/* Render only one instance of children for vertical mobile layout */}
                     <div className="flex flex-col w-full">
@@ -210,7 +222,7 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
     }
 
     return (
-        <HorizontalScrollContext.Provider value={{ progress, scrollToSection }}>
+        <HorizontalScrollContext.Provider value={{ progress, activeIndex, scrollToSection }}>
             <div
                 ref={containerRef}
                 className="fixed inset-0 overflow-hidden flex items-center bg-transparent cursor-grab active:cursor-grabbing"

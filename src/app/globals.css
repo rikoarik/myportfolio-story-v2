@@ -8,6 +8,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Semantic Colors */
+  --color-primary: #171717;
+  --color-accent: #f97316;
+  /* orange-500 */
+  --color-surface: #ffffff;
+  --color-surface-dim: #f8fafc;
+  /* slate-50 */
 }
 
 /* 

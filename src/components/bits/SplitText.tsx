@@ -38,9 +38,9 @@ export default function SplitText({ text, className = "", delay = 100 }: SplitTe
     );
 
     return (
-        <p ref={ref} className={`overflow-hidden ${className}`} style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+        <p ref={ref} className={`overflow-hidden ${className}`} style={{ textAlign: "inherit", whiteSpace: "normal" }}>
             {springs.map((props, index) => (
-                <animated.span key={index} style={props} className="inline-block hover:text-emerald-500 transition-colors duration-300">
+                <animated.span key={index} style={props} className="inline-block transition-colors duration-300">
                     {letters[index] === " " ? "\u00A0" : letters[index]}
                 </animated.span>
             ))}

@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContentSection {
+  id          String   @id @default(cuid())
+  sectionKey  String   // e.g., "foundation", "structure", etc.
+  language    String   // "en" or "id"
+  label       String
+  data        String   // JSON string containing all section content
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([sectionKey, language])
+}
+
+model LayoutConfig {
+  id          String   @id @default(cuid())
+  sectionKey  String   @unique
+  gridCols    Int      @default(12)
+  gap         Int      @default(8)
+  padding     Int      @default(8)
+  alignment   String   @default("start") // start, center, end
+  data        String   // JSON string for additional layout config
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FontConfig {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  fontFamily  String   @default("Inter")
+  h1Size      String   @default("6rem")
+  h2Size      String   @default("3.75rem")
+  h3Size      String   @default("1.875rem")
+  bodySize    String   @default("1rem")
+  weight      String   @default("400")
+  data        String   // JSON string for additional font config
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AnimationConfig {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  type        String   @default("fade") // fade, slide, scale, etc.
+  duration    Float    @default(0.6)
+  delay       Float    @default(0)
+  easing      String   @default("ease-in-out")
+  data        String   // JSON string for additional animation config
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  filename    String
+  filepath    String
+  mimetype    String
+  size        Int
+  alt         String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
