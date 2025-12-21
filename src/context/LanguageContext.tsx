@@ -16,7 +16,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
     const t = (path: string) => {
         const keys = path.split(".");
-        // @ts-expect-error - Recursive dictionary access is hard to type perfectly without deep recursion types
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let current: any = dictionary[language];
         for (const key of keys) {
             if (current[key] === undefined) return path;
