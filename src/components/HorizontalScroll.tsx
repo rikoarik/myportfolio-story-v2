@@ -210,13 +210,14 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
     if (isMobile) {
         return (
             <HorizontalScrollContext.Provider value={{ progress, activeIndex, scrollToSection }}>
-                <div className="w-full flex flex-col overflow-x-hidden relative">
+                <div className="w-full h-full flex flex-col overflow-y-auto overflow-x-hidden relative">
                     {/* Render only one instance of children for vertical mobile layout */}
                     <div className="flex flex-col w-full">
                         {children}
                     </div>
                 </div>
-                {/* No overlay on mobile, or render a modified one if needed */}
+                {/* Render overlay on mobile as well */}
+                {overlay}
             </HorizontalScrollContext.Provider>
         );
     }
