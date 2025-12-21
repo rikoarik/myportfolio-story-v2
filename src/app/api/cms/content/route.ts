@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
             });
 
             return NextResponse.json(
-                sections.map(section => ({
+                sections.map((section: { data: string; }) => ({
                     ...section,
                     data: JSON.parse(section.data),
                 }))

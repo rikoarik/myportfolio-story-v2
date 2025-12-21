@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
             const configs = await prisma.layoutConfig.findMany();
 
             return NextResponse.json(
-                configs.map(config => ({
+                configs.map((config: { data: string; }) => ({
                     ...config,
                     data: JSON.parse(config.data),
                 }))

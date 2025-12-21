@@ -126,8 +126,7 @@ export default function Home() {
 
                             <div className="lg:col-span-4 flex flex-col justify-end lg:justify-between pl-0 lg:pl-4 pt-12 lg:pt-0">
                                 <div className="grid grid-rows-3 gap-px bg-slate-300">
-                                    {/* @ts-expect-error - Dictionary array access */}
-                                    {t('page.foundation.cards').map((word: string, i: number) => (
+                                    {(t('page.foundation.cards') as unknown as string[]).map((word, i) => (
                                         <div key={i} className="h-full w-full">
                                             <Magnetic>
                                                 <motion.div variants={itemVariants} className="bg-[#EBEBEB] p-8 flex items-center justify-center lg:justify-start group hover:bg-white transition-colors h-full">
@@ -221,8 +220,7 @@ export default function Home() {
                             </div>
 
                             <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
-                                {/* @ts-expect-error - Dictionary array access */}
-                                {t('page.state.cards').map((item: any, i: number) => {
+                                {(t('page.state.cards') as unknown as Array<{ title: string; sub: string }>).map((item, i) => {
                                     const icons = [Monitor, ArrowUpRight, Zap, Terminal];
                                     const bgColors = ["bg-indigo-50", "bg-blue-50", "bg-amber-50", "bg-emerald-50"];
                                     const textColors = ["text-indigo-600", "text-blue-600", "text-amber-600", "text-emerald-600"];
@@ -270,8 +268,7 @@ export default function Home() {
                             </div>
 
                             <div className="lg:col-span-7 grid grid-rows-3 gap-2">
-                                {/* @ts-expect-error - Dictionary array access */}
-                                {t('page.offline.cards').map((item: any, i: number) => {
+                                {(t('page.offline.cards') as unknown as Array<{ title: string; sub: string }>).map((item, i) => {
                                     const icons = [Database, Cloud, GitBranch];
                                     const Icon = icons[i];
                                     return (
@@ -309,8 +306,7 @@ export default function Home() {
                                 </motion.div>
                                 <span className="text-xs font-mono uppercase tracking-widest text-purple-600 block mb-4">{t('page.hardware.label')}</span>
                                 <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight mb-6">
-                                    {/* @ts-expect-error - Multiline text */}
-                                    {t('page.hardware.title').split(' ').map((w: string, i: number) => <span key={i} className="block">{w}</span>)}
+                                    {(t('page.hardware.title') as string).split(' ').map((w: string, i: number) => <span key={i} className="block">{w}</span>)}
                                 </h2>
                                 <p className="text-slate-600">
                                     {t('page.hardware.desc')}
@@ -381,8 +377,7 @@ export default function Home() {
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 auto-rows-min content-center">
-                                {/* @ts-expect-error - Dictionary array access */}
-                                {t('page.scale.cards').map((item: any, i: number) => (
+                                {(t('page.scale.cards') as unknown as Array<{ title: string; sub: string }>).map((item, i) => (
                                     <ScrollAnimatedCard key={i} delay={i * 0.1} className="aspect-video bg-white border border-emerald-100 rounded-2xl p-6 flex flex-col justify-end hover:shadow-lg transition-shadow">
                                         <div className="w-8 h-8 rounded-full bg-emerald-100 mb-auto"></div>
                                         <p className="font-bold text-slate-900">{item.title}</p>
@@ -462,8 +457,7 @@ export default function Home() {
                             </div>
 
                             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto w-full">
-                                {/* @ts-expect-error - Dictionary array access */}
-                                {t('page.crossplatform.cards').map((item: any, i: number) => {
+                                {(t('page.crossplatform.cards') as unknown as Array<{ title: string; sub: string }>).map((item, i) => {
                                     const icons = [Smartphone, Tablet, Box, Radio];
                                     const colors = ["text-green-500", "text-blue-500", "text-cyan-500", "text-sky-500"];
                                     const borders = ["hover:border-green-400", "hover:border-blue-400", "hover:border-cyan-400", "hover:border-sky-400"];
@@ -537,15 +531,13 @@ export default function Home() {
 
                             <div className="relative mb-12">
                                 <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-slate-900 relative z-10">
-                                    {/* @ts-expect-error - Multiline text */}
-                                    {t('page.refinement.title').split(' ').map((w: string, i: number) => <span key={i} className="block">{w}</span>)}
+                                    {(t('page.refinement.title') as string).split(' ').map((w: string, i: number) => <span key={i} className="block">{w}</span>)}
                                 </h2>
                                 <div className="absolute inset-0 bg-gradient-to-r from-orange-200 to-rose-200 blur-3xl opacity-20 -z-0 rounded-full"></div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl w-full border-t border-slate-100 pt-12">
-                                {/* @ts-expect-error - Dictionary array access */}
-                                {t('page.refinement.cards').map((item: any, i: number) => (
+                                {(t('page.refinement.cards') as unknown as Array<{ title: string; desc: string }>).map((item, i) => (
                                     <div key={i} className={`text-center ${i === 1 ? 'border-l-0 md:border-l border-r-0 md:border-r border-slate-100 px-4' : ''}`}>
                                         <p className="font-bold text-lg mb-2">{item.title}</p>
                                         <p className="text-sm text-slate-500">{item.desc}</p>

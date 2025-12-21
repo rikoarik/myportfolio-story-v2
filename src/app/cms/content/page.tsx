@@ -8,8 +8,10 @@ import { ArrowLeft, Save, Globe } from 'lucide-react';
 export default function ContentEditor() {
     const router = useRouter();
     const [language, setLanguage] = useState<'en' | 'id'>('en');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [sections, setSections] = useState<any[]>([]);
     const [selectedSection, setSelectedSection] = useState<string | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [formData, setFormData] = useState<any>({});
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);

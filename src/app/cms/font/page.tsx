@@ -7,6 +7,7 @@ import { ArrowLeft, Save } from 'lucide-react';
 
 export default function FontEditor() {
     const router = useRouter();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [config, setConfig] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
