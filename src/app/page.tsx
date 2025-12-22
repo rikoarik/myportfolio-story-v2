@@ -8,7 +8,7 @@ import BottomRuler from "../components/BottomRuler";
 import Section from "../components/Section";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
-import { ArrowUpRight, Layers, Shield, Box, Zap, Database, Lock, Terminal, Key, GitBranch, Smartphone, Globe, Cloud, Cpu, Server, Radio, Monitor, Tablet } from "lucide-react";
+import { ArrowUpRight, Layers, Shield, Box, Zap, Database, Lock, Terminal, Key, GitBranch, Smartphone, Globe, Cloud, Cpu, Server, Radio, Monitor, Tablet, ExternalLink, Play } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import SplitText from "@/components/bits/SplitText";
 import DecryptedText from "@/components/bits/DecryptedText";
@@ -268,16 +268,22 @@ export default function Home() {
                             </div>
 
                             <div className="lg:col-span-7 grid grid-rows-3 gap-2">
-                                {(t('page.offline.cards') as unknown as Array<{ title: string; sub: string }>).map((item, i) => {
+                                {(t('page.offline.cards') as unknown as Array<{ title: string; sub: string; link?: string }>).map((item, i) => {
                                     const icons = [Database, Cloud, GitBranch];
                                     const Icon = icons[i];
                                     return (
-                                        <ScrollAnimatedCard key={i} delay={i * 0.15} className="bg-white p-6 md:p-8 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow rounded-lg">
+                                        <ScrollAnimatedCard key={i} delay={i * 0.15} className="group relative bg-white p-6 md:p-8 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow rounded-lg overflow-hidden">
                                             <div>
                                                 <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
-                                                <p className="text-slate-500">{item.sub}</p>
+                                                <p className="text-slate-500 mb-2">{item.sub}</p>
+                                                {item.link && (
+                                                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-rose-500 uppercase tracking-wider hover:underline">
+                                                        <span>View Demo</span>
+                                                        <ExternalLink size={12} />
+                                                    </a>
+                                                )}
                                             </div>
-                                            <div className="p-3 bg-rose-50 rounded-full text-rose-500">
+                                            <div className="p-3 bg-rose-50 rounded-full text-rose-500 group-hover:bg-rose-100 transition-colors">
                                                 <Icon size={24} />
                                             </div>
                                         </ScrollAnimatedCard>
@@ -377,11 +383,19 @@ export default function Home() {
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 auto-rows-min content-center">
-                                {(t('page.scale.cards') as unknown as Array<{ title: string; sub: string }>).map((item, i) => (
-                                    <ScrollAnimatedCard key={i} delay={i * 0.1} className="aspect-video bg-white border border-emerald-100 rounded-2xl p-6 flex flex-col justify-end hover:shadow-lg transition-shadow">
-                                        <div className="w-8 h-8 rounded-full bg-emerald-100 mb-auto"></div>
-                                        <p className="font-bold text-slate-900">{item.title}</p>
-                                        <p className="text-xs text-slate-500">{item.sub}</p>
+                                {(t('page.scale.cards') as unknown as Array<{ title: string; sub: string; link: string; type: 'playstore' | 'github' }>).map((item, i) => (
+                                    <ScrollAnimatedCard key={i} delay={i * 0.1} className="aspect-video bg-white border border-emerald-100 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition-all hover:-translate-y-1 group relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-4 opacity-50 group-hover:opacity-100 transition-opacity">
+                                            {item.type === 'playstore' ? <Play size={16} className="text-emerald-500 fill-emerald-500" /> : <GitBranch size={16} className="text-slate-400" />}
+                                        </div>
+                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-100 to-teal-50 mb-auto flex items-center justify-center">
+                                            <span className="font-black text-emerald-600 text-lg">{item.title.charAt(0)}</span>
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-slate-900 leading-tight mb-1">{item.title}</p>
+                                            <p className="text-[10px] uppercase tracking-wide text-slate-500">{item.sub}</p>
+                                        </div>
+                                        <a href={item.link} className="absolute inset-0 z-10" aria-label={`View ${item.title}`}></a>
                                     </ScrollAnimatedCard>
                                 ))}
                             </div>

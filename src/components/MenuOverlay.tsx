@@ -409,6 +409,22 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                             <div className="space-y-10">
                                 <div>
                                     <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">
+                                        Work
+                                    </h3>
+                                    <a href="/projects" className="flex items-center gap-4 w-full p-4 rounded-xl bg-white border border-slate-200 hover:border-orange-500 hover:shadow-md transition group">
+                                        <div className="p-2 bg-orange-50 rounded-lg text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                            <Smartphone className="w-6 h-6" />
+                                        </div>
+                                        <div className="text-left">
+                                            <div className="font-bold text-sm text-slate-900">Featured Projects</div>
+                                            <div className="text-[10px] uppercase text-slate-500">Case Studies & Demos</div>
+                                        </div>
+                                        <ArrowRight className="ml-auto w-4 h-4 text-slate-300 group-hover:text-orange-500 transition-colors" />
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">
                                         {t('menu.connect')}
                                     </h3>
                                     <div className="space-y-4">

@@ -67,9 +67,9 @@ export const dictionary = {
                 desc: "Connections cannot be trusted. System must be ready. Data can be late, but never lost.",
                 consistency: "Consistency is designed. Not assumed.",
                 cards: [
-                    { title: "Local Database", sub: "Room & SQLite as source of truth." },
-                    { title: "Background Sync", sub: "Workers running behind scenes." },
-                    { title: "Conflict Res", sub: "Automated data resolution strategies." }
+                    { title: "Local Database", sub: "LaundryApp - SQLite Source of Truth", link: "https://github.com/rikoarik/LaundryApp" },
+                    { title: "Background Sync", sub: "StoryApp - Paging & Sync", link: "https://github.com/rikoarik/StoryApp" },
+                    { title: "Conflict Res", sub: "KKP Attendance - Auto Resolve", link: "#" } // Updated to KKP
                 ]
             },
             hardware: {
@@ -85,10 +85,10 @@ export const dictionary = {
                 title: "APPLICATIONS",
                 desc: "One becomes many. Patterns must be consistent but not rigid.",
                 cards: [
-                    { title: "Consistency", sub: "Shared Design System" },
-                    { title: "Flexibility", sub: "Custom ViewModels" },
-                    { title: "Base Classes", sub: "Standardized Foundation" },
-                    { title: "Factory", sub: "Simplified DI" }
+                    { title: "ClosePay Merchant", sub: "Core Module Architecture", link: "https://github.com/rikoarik/merchant-closepay-core", type: "github" },
+                    { title: "Member Ecosystem", sub: "Sangu Lirboyo • MyBrawijaya", link: "https://play.google.com/store/apps/details?id=com.solusinegeri.app.partner.p2l&hl=id", type: "playstore" },
+                    { title: "Finance AI", sub: "Smart Management Dashboard", link: "https://github.com/rikoarik/finance-management-ai", type: "github" },
+                    { title: "Launcher SolusiNegeri", sub: "Kiosk Mode • Device Admin", link: "https://play.google.com/store/apps/details?id=com.solusinegeri.launcher&hl=id", type: "playstore" }
                 ]
             },
             security: {
@@ -199,9 +199,9 @@ export const dictionary = {
                 desc: "Koneksi tidak bisa dipercaya. Sistem harus siap. Data boleh terlambat, tapi tidak boleh hilang.",
                 consistency: "Konsistensi dirancang. Bukan diasumsikan.",
                 cards: [
-                    { title: "Database Lokal", sub: "Room & SQLite sebagai sumber kebenaran." },
-                    { title: "Sinkronisasi Latar", sub: "Worker jalan di belakang layar." },
-                    { title: "Resolusi Konflik", sub: "Strategi resolusi data otomatis." }
+                    { title: "Database Lokal", sub: "LaundryApp - SQLite Utama", link: "https://github.com/rikoarik/LaundryApp" },
+                    { title: "Sinkronisasi Latar", sub: "StoryApp - Paging & Sync", link: "https://github.com/rikoarik/StoryApp" },
+                    { title: "Resolusi Konflik", sub: "KKP Absensi - Auto Resolve", link: "#" }
                 ]
             },
             hardware: {
@@ -217,10 +217,10 @@ export const dictionary = {
                 title: "APLIKASI",
                 desc: "Satu berkembang menjadi banyak. Pola harus konsisten tapi tidak kaku.",
                 cards: [
-                    { title: "Konsistensi", sub: "Sistem Desain Bersama" },
-                    { title: "Fleksibilitas", sub: "ViewModel Kustom" },
-                    { title: "Kelas Dasar", sub: "Pondasi Terstandarisasi" },
-                    { title: "Pabrik", sub: "DI Disederhanakan" }
+                    { title: "ClosePay Merchant", sub: "Arsitektur Core Module", link: "https://github.com/rikoarik/merchant-closepay-core", type: "github" },
+                    { title: "Ekosistem Member", sub: "Sangu Lirboyo • MyBrawijaya", link: "https://play.google.com/store/apps/details?id=com.solusinegeri.app.partner.p2l&hl=id", type: "playstore" },
+                    { title: "Finance AI", sub: "Dashboard Manajemen Pintar", link: "https://github.com/rikoarik/finance-management-ai", type: "github" },
+                    { title: "Launcher SolusiNegeri", sub: "Mode Kiosk • Admin Perangkat", link: "https://play.google.com/store/apps/details?id=com.solusinegeri.launcher&hl=id", type: "playstore" }
                 ]
             },
             security: {
