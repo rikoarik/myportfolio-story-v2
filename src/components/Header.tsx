@@ -34,7 +34,7 @@ export default function Header() {
                 >
                     <div className="flex flex-col items-end">
                         <span className="text-sm font-bold tracking-tight">{t('header.menu')}</span>
-                       
+
                     </div>
                     <Layers className={`w-6 h-6 stroke-1 group-hover:rotate-180 transition-transform duration-500 ${iconColor}`} />
                 </button>
