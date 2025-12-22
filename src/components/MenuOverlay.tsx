@@ -310,7 +310,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                     WebkitOverflowScrolling: 'touch'
                                 }}
                             >
-                                <div className="max-w-4xl mx-auto px-8 flex flex-col gap-20">
+                                <div className="max-w-4xl mx-auto px-8 flex flex-col gap-12 md:gap-20">
                                     {INFINITE_ITEMS.map((item, index) => {
                                         const originalIndex = index % MENU_ITEMS.length;
                                         const isLeft = originalIndex % 2 === 0;
@@ -321,7 +321,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                         return (
                                             <div
                                                 key={`${item.id}-${index}`}
-                                                className={`flex ${isLeft ? "justify-start" : "justify-end"}`}
+                                                className={`flex justify-center md:${isLeft ? "justify-start" : "justify-end"}`}
                                             >
                                                 <motion.button
                                                     initial={{ opacity: 0, y: 40 }}
@@ -358,8 +358,8 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                                         {/* Static(ish) Card Container */}
                                                         <motion.div
                                                             className={`
-                                relative z-10 w-36 h-36 md:w-48 md:h-48
-                                rounded-[2rem] md:rounded-[2.5rem]
+                                relative z-10 w-44 h-44 md:w-48 md:h-48
+                                rounded-[2.5rem]
                                 flex items-center justify-center
                                 shadow-lg transition-all duration-300
                                 ${activeIndex === index
@@ -376,19 +376,19 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                                                                 variants={variant}
                                                                 animate={activeIndex === index ? "hover" : "initial"}
                                                             >
-                                                                <item.icon className="w-16 h-16 md:w-24 md:h-24" strokeWidth={1.2} />
+                                                                <item.icon className="w-20 h-20 md:w-24 md:h-24" strokeWidth={1.2} />
                                                             </motion.div>
                                                         </motion.div>
                                                     </div>
 
                                                     {/* TYPOGRAPHY */}
                                                     <div className="text-center">
-                                                        <div className="font-mono text-[10px] md:text-xs text-slate-400 mb-2 tracking-widest">
+                                                        <div className="font-mono text-xs md:text-xs text-slate-400 mb-2 tracking-widest uppercase">
                                                             CHAPTER 0{originalIndex + 1}
                                                         </div>
                                                         <div
                                                             className={`
-                                text-lg md:text-xl font-medium tracking-tight font-serif italic
+                                text-2xl md:text-xl font-medium tracking-tight font-serif italic
                                 transition-colors duration-300
                                 ${activeIndex === index ? "text-slate-900" : "text-slate-400"}
                               `}
