@@ -21,7 +21,7 @@ export default function Header() {
             <header className={`fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center ${textColor} pointer-events-none transition-colors duration-500`}>
                 <div className="pointer-events-auto cursor-pointer">
                     <h1 className="text-xl md:text-2xl font-bold tracking-tight">
-                        Arik Riko Arik
+                        Arik Riko Prasetya
                     </h1>
                     <p className={`text-[10px] tracking-widest uppercase mt-1 transition-colors duration-500 ${subtextColor}`}>
                         {t('header.role')}
