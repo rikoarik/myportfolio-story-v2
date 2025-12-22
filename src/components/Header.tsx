@@ -34,9 +34,7 @@ export default function Header() {
                 >
                     <div className="flex flex-col items-end">
                         <span className="text-sm font-bold tracking-tight">{t('header.menu')}</span>
-                        <span className="text-[8px] uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
-                            {t('header.menu_sub')}
-                        </span>
+                       
                     </div>
                     <Layers className={`w-6 h-6 stroke-1 group-hover:rotate-180 transition-transform duration-500 ${iconColor}`} />
                 </button>

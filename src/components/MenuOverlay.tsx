@@ -131,19 +131,19 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-    /* BODY LOCK TANPA MEMBUNUH WHEEL */
+    /* BODY LOCK */
     useEffect(() => {
         if (!isOpen) return;
 
-        const prevPos = document.body.style.position;
-        const prevWidth = document.body.style.width;
+        const prevOverflow = document.body.style.overflow;
+        const prevTouchAction = document.body.style.touchAction;
 
-        document.body.style.position = "fixed";
-        document.body.style.width = "100%";
+        document.body.style.overflow = "hidden";
+        document.body.style.touchAction = "none";
 
         return () => {
-            document.body.style.position = prevPos;
-            document.body.style.width = prevWidth;
+            document.body.style.overflow = prevOverflow;
+            document.body.style.touchAction = prevTouchAction;
         };
     }, [isOpen]);
 
@@ -156,41 +156,90 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
         });
     }, [isOpen]);
 
-    /* MANUAL WHEEL + TOUCH FORWARDING */
+    /* PHYSICS-BASED INERTIA SCROLLING */
     useEffect(() => {
         const el = containerRef.current;
-        if (!el) return;
+        if (!el || !isOpen) return;
+
+        let velocity = 0;
+        let currentScroll = el.scrollTop;
+        let animationId: number | null = null;
+        let lastTime = performance.now();
+        let isWheeling = false;
+        let wheelTimeout: ReturnType<typeof setTimeout> | null = null;
+
+        // Physics constants - TUNED FOR STRONG INERTIA
+        const friction = 0.96; // Higher = longer slide (0.96 = very smooth, long momentum)
+        const velocityMultiplier = 2.5; // Higher = more responsive input
+        const minVelocity = 0.05; // Lower = smoother stop
+
+        const animate = () => {
+            const now = performance.now();
+            const deltaTime = Math.min((now - lastTime) / 16.67, 2); // Normalize to ~60fps, cap at 2x
+            lastTime = now;
+
+            // Apply friction when not actively wheeling
+            if (!isWheeling) {
+                velocity *= Math.pow(friction, deltaTime);
+            }
+
+            // Update position
+            currentScroll += velocity * deltaTime;
+
+            // Clamp to bounds with elastic bounce-back
+            const maxScroll = el.scrollHeight - el.clientHeight;
+            if (currentScroll < 0) {
+                currentScroll = 0;
+                velocity = 0;
+            } else if (currentScroll > maxScroll) {
+                currentScroll = maxScroll;
+                velocity = 0;
+            }
+
+            el.scrollTop = currentScroll;
+
+            // Continue animation if velocity is significant
+            if (Math.abs(velocity) > minVelocity) {
+                animationId = requestAnimationFrame(animate);
+            } else {
+                velocity = 0;
+                animationId = null;
+            }
+        };
 
         const onWheel = (e: WheelEvent) => {
             e.preventDefault();
-            el.scrollTop += e.deltaY;
-        };
 
-        let lastY: number | null = null;
+            // Reset wheeling state
+            isWheeling = true;
+            if (wheelTimeout) clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                isWheeling = false;
+            }, 50);
 
-        const onTouchMove = (e: TouchEvent) => {
-            if (e.touches.length !== 1) return;
-            const y = e.touches[0].clientY;
-            if (lastY !== null) {
-                el.scrollTop += lastY - y;
+            // Sync with current scroll position
+            if (animationId === null) {
+                currentScroll = el.scrollTop;
+                lastTime = performance.now();
             }
-            lastY = y;
-        };
 
-        const onTouchEnd = () => {
-            lastY = null;
+            // Add velocity based on wheel delta
+            velocity += e.deltaY * velocityMultiplier * 0.1;
+
+            // Start animation if not already running
+            if (animationId === null) {
+                animationId = requestAnimationFrame(animate);
+            }
         };
 
         el.addEventListener("wheel", onWheel, { passive: false });
-        el.addEventListener("touchmove", onTouchMove, { passive: false });
-        el.addEventListener("touchend", onTouchEnd);
 
         return () => {
             el.removeEventListener("wheel", onWheel);
-            el.removeEventListener("touchmove", onTouchMove);
-            el.removeEventListener("touchend", onTouchEnd);
+            if (animationId) cancelAnimationFrame(animationId);
+            if (wheelTimeout) clearTimeout(wheelTimeout);
         };
-    }, []);
+    }, [isOpen]);
 
     /* INFINITE RESET */
     const handleScroll = () => {
@@ -220,9 +269,6 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                     <div className="shrink-0 flex justify-between items-center p-6 md:p-8 border-b border-slate-200 bg-slate-50/90">
                         <div>
                             <div className="text-xl font-bold">{t('header.menu')}</div>
-                            <div className="text-[10px] uppercase tracking-widest text-slate-500 font-mono">
-                                {t('header.menu_sub')}
-                            </div>
                         </div>
 
                         {/* Language Toggle + Close */}
@@ -244,11 +290,11 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                     </div>
 
                     {/* CONTENT */}
-                    <div className="flex-1 min-h-0 flex flex-col md:flex-row">
+                    <div className="flex-1 min-h-0 flex flex-col md:flex-row overflow-hidden">
 
                         {/* LEFT – MANUAL SCROLL */}
                         <div
-                            className="flex-1 min-h-0 flex flex-col"
+                            className="flex-1 min-h-0 flex flex-col overflow-hidden"
                             style={{
                                 maskImage:
                                     "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)"
@@ -257,7 +303,12 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                             <div
                                 ref={containerRef}
                                 onScroll={handleScroll}
-                                className="flex-1 overflow-hidden pt-24 pb-24"
+                                className="h-full overflow-y-auto pt-24 pb-24"
+                                style={{
+                                    touchAction: 'auto',
+                                    overscrollBehavior: 'contain',
+                                    WebkitOverflowScrolling: 'touch'
+                                }}
                             >
                                 <div className="max-w-4xl mx-auto px-8 flex flex-col gap-20">
                                     {INFINITE_ITEMS.map((item, index) => {

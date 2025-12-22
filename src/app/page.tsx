@@ -81,7 +81,7 @@ export default function Home() {
                 initial={{ y: "100vh" }}
                 animate={{ y: isLoaded ? 0 : "100vh" }}
                 transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-                className="fixed inset-0 z-50 bg-background w-full h-full"
+                className="relative lg:fixed inset-0 z-50 bg-background w-full min-h-screen lg:h-full"
             >
                 <BackgroundController />
                 <HorizontalScroll overlay={
