@@ -1,9 +1,22 @@
 "use client";
 
-import React from 'react';
+import React, { useSyncExternalStore } from 'react';
 import Snowfall from 'react-snowfall';
 
+// React 18+ recommended way to check if we're on the client
+// This avoids the "cascading render" warning from useState/useEffect
+const emptySubscribe = () => () => { };
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+function useIsClient() {
+    return useSyncExternalStore(emptySubscribe, getClientSnapshot, getServerSnapshot);
+}
+
 export default function SeasonalEffects() {
+    const isClient = useIsClient();
+
+    if (!isClient) return null;
 
     const now = new Date();
     const month = now.getMonth(); // 0-11
