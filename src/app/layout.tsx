@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import { LanguageProvider } from "@/context/LanguageContext";
+import dynamic from 'next/dynamic';
 import "./globals.css";
+
+const SeasonalEffects = dynamic(() => import('@/components/SeasonalEffects'), {
+  ssr: false
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +38,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LanguageProvider>
+          <SeasonalEffects />
           <SmoothScroll>{children}</SmoothScroll>
         </LanguageProvider>
       </body>
