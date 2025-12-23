@@ -44,7 +44,7 @@ export default function SeasonalEffects() {
                     position: 'fixed',
                     width: '100vw',
                     height: '100vh',
-                    zIndex: 50,
+                    zIndex: 9999,
                     pointerEvents: 'none',
                 }}
                 snowflakeCount={100}
@@ -63,7 +63,7 @@ export default function SeasonalEffects() {
                     position: 'fixed',
                     width: '100vw',
                     height: '100vh',
-                    zIndex: 50,
+                    zIndex: 9999,
                     pointerEvents: 'none',
                 }}
                 color="#D2691E" // Chocolate/Orange color for leaves
@@ -83,7 +83,7 @@ export default function SeasonalEffects() {
                     position: 'fixed',
                     width: '100vw',
                     height: '100vh',
-                    zIndex: 50,
+                    zIndex: 9999,
                     pointerEvents: 'none',
                 }}
                 color="#FFC0CB" // Pink
