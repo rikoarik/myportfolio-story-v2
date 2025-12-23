@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import SeasonalEffects from "@/components/SeasonalEffects";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -33,10 +34,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LanguageProvider>
-          <SeasonalEffects />
-          <SmoothScroll>{children}</SmoothScroll>
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <SeasonalEffects />
+            <SmoothScroll>{children}</SmoothScroll>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
