@@ -1,41 +1,50 @@
-"use client";
+import { motion } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
+import { useHorizontalScroll } from "./HorizontalScroll";
+import { ThemeColors } from "@/config/theme";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+interface BackgroundControllerProps {
+    sectionThemes?: Record<string, ThemeColors>;
+}
 
-export default function BackgroundController() {
-    const { scrollY } = useScroll();
+// Order must match the sections in page.tsx loop
+const SECTION_IDS = [
+    'foundation',
+    'architecture',
+    'state',
+    'offline',
+    'hardware',
+    'multiapp',
+    'security',
+    'crossplatform',
+    'production',
+    'refinement',
+    'future'
+];
 
+export default function BackgroundController({ sectionThemes }: BackgroundControllerProps) {
+    const { theme } = useTheme();
+    const { activeIndex } = useHorizontalScroll();
 
-    // Map progress to colors.
-    // Colors: pastel palette from Color Hunt + a few more for 8 chapters
-    const colors = [
-        "#FFDCDC", // Void
-        "#FFF2EB", // Origin
-        "#FFE8CD", // Pressure
-        "#FFD6BA", // Control
-        "#FFE5D9", // Systems
-        "#FBFAF0", // Scale
-        "#F0F4EF", // Tools
-        "#E5E1EE"  // Now
-    ];
+    // Determine target color based on active section
+    let targetColor = theme.bgPrimary;
 
-    const [bgColor, setBgColor] = useState(colors[0]);
+    if (sectionThemes) {
+        // Safety check index
+        const safeIndex = Math.max(0, Math.min(activeIndex, SECTION_IDS.length - 1));
+        const activeSectionId = SECTION_IDS[safeIndex];
+        const activeTheme = sectionThemes[activeSectionId];
 
-    useMotionValueEvent(scrollY, "change", (latest: number) => {
-        const totalH = document.documentElement.scrollHeight - window.innerHeight;
-        const singleSetHeight = totalH / 3;
-        if (singleSetHeight <= 0) return;
-
-        const progress = (latest % singleSetHeight) / singleSetHeight;
-        const index = Math.min(Math.floor(progress * colors.length), colors.length - 1);
-        setBgColor(colors[index]);
-    });
+        if (activeTheme) {
+            targetColor = activeTheme.bgPrimary;
+        }
+    }
 
     return (
         <motion.div
-            animate={{ backgroundColor: bgColor }}
-            transition={{ duration: 1, ease: "linear" }}
+            initial={{ backgroundColor: targetColor }}
+            animate={{ backgroundColor: targetColor }}
+            transition={{ duration: 0.8, ease: "easeInOut" }} // Smooth fade
             className="fixed inset-0 -z-10 w-full h-full"
         />
     );

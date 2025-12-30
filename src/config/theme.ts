@@ -11,7 +11,8 @@ export type ThemeName =
     | 'forest'
     | 'sunset'
     | 'lavender'
-    | 'coffee';
+    | 'coffee'
+    | 'light';
 
 export interface ThemeColors {
     // Main backgrounds
@@ -175,12 +176,26 @@ export const themes: Record<ThemeName, ThemeColors> = {
         gradientFrom: '#E8A87C',
         gradientTo: '#5C4033',
     },
+
+    // Premium Light - Clean, airy, vibrancy
+    light: {
+        bgPrimary: '#ffffff',
+        bgSecondary: '#f8fafc', // Slate-50
+        accent: '#06b6d4',       // Cyan-500
+        accentHover: '#0891b2',  // Cyan-600
+        textPrimary: '#0f172a',  // Slate-900
+        textSecondary: '#64748b',// Slate-500
+        textAccent: '#06b6d4',
+        border: '#e2e8f0',       // Slate-200
+        gradientFrom: '#06b6d4',
+        gradientTo: '#ffffff',
+    },
 };
 
 // ============================================
 // CHANGE THIS TO SWITCH THEMES
 // ============================================
-export const activeTheme: ThemeName = 'nightSky';
+export const activeTheme: ThemeName = 'light';
 
 // Helper function to get current theme colors
 export function getTheme(): ThemeColors {

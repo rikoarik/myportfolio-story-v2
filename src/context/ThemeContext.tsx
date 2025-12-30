@@ -1,19 +1,21 @@
 "use client";
 
-import React, { createContext, useContext, useCallback, useSyncExternalStore, ReactNode } from 'react';
+import React, { createContext, useContext, useCallback, useSyncExternalStore, ReactNode, useMemo } from 'react';
 import { themes, ThemeName, ThemeColors } from '@/config/theme';
+import { useTimeTheme } from '@/hooks/useTimeTheme';
 
 interface ThemeContextType {
     theme: ThemeColors;
-    themeName: ThemeName;
-    setThemeName: (name: ThemeName) => void;
-    availableThemes: ThemeName[];
+    themeName: ThemeName | 'time-based';
+    setThemeName: (name: ThemeName | 'time-based') => void;
+    availableThemes: (ThemeName | 'time-based')[];
+    isTimeBased: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = 'portfolio-theme';
-const DEFAULT_THEME: ThemeName = 'nightSky';
+const THEME_STORAGE_KEY = 'portfolio-theme-v2';
+const DEFAULT_THEME: ThemeName | 'time-based' = 'time-based';
 
 // For useSyncExternalStore - avoids the setState in effect warning
 let listeners: Array<() => void> = [];
@@ -31,17 +33,21 @@ function subscribe(listener: () => void) {
     };
 }
 
-function getSnapshot(): ThemeName {
+function getSnapshot(): ThemeName | 'time-based' {
     if (typeof window === 'undefined') return DEFAULT_THEME;
-    const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeName | null;
+    const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeName | 'time-based' | null;
+    if (saved === 'time-based') return 'time-based';
     return saved && themes[saved] ? saved : DEFAULT_THEME;
 }
 
-function getServerSnapshot(): ThemeName {
+function getServerSnapshot(): ThemeName | 'time-based' {
     return DEFAULT_THEME;
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
+    // Get time-based theme colors
+    const timeTheme = useTimeTheme();
+
     // Use useSyncExternalStore to read from localStorage without cascading renders
     const themeName = useSyncExternalStore(
         subscribe,
@@ -49,16 +55,27 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         getServerSnapshot
     );
 
-    const setThemeName = useCallback((name: ThemeName) => {
+    const setThemeName = useCallback((name: ThemeName | 'time-based') => {
         localStorage.setItem(THEME_STORAGE_KEY, name);
         emitChange();
     }, []);
 
+    const isTimeBased = themeName === 'time-based';
+
+    // Use time-based theme if selected, otherwise use static theme
+    const theme = useMemo(() => {
+        if (isTimeBased) {
+            return timeTheme;
+        }
+        return themes[themeName as ThemeName];
+    }, [isTimeBased, themeName, timeTheme]);
+
     const value: ThemeContextType = {
-        theme: themes[themeName],
+        theme,
         themeName,
         setThemeName,
-        availableThemes: Object.keys(themes) as ThemeName[],
+        availableThemes: ['time-based', ...Object.keys(themes) as ThemeName[]],
+        isTimeBased,
     };
 
     return (
@@ -77,7 +94,9 @@ export function useTheme() {
 }
 
 // Theme display names for UI
-export const themeDisplayNames: Record<ThemeName, string> = {
+export const themeDisplayNames: Record<ThemeName | 'time-based', string> = {
+    'time-based': '⏰ Time-Based (Real-time)',
+    light: '☀️ Premium Light',
     nightSky: '🌙 Night Sky',
     midnightBlue: '🌌 Midnight Blue',
     darkPurple: '💜 Dark Purple',

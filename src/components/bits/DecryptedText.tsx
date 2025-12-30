@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,7 @@ interface DecryptedTextProps {
     parentClassName?: string;
     animateOn?: "view" | "hover";
     delay?: number;
+    style?: React.CSSProperties;
 }
 
 export default function DecryptedText({
@@ -26,13 +27,15 @@ export default function DecryptedText({
     parentClassName = "",
     animateOn = "view",
     delay = 0,
+    style,
 }: DecryptedTextProps) {
     const [displayText, setDisplayText] = useState(text);
     const [isScrambling, setIsScrambling] = useState(false);
+    const [hasAnimated, setHasAnimated] = useState(false);
     const containerRef = useRef<HTMLSpanElement>(null);
     const isInView = useInView(containerRef, { once: true, margin: "-10px" });
 
-    const revealText = () => {
+    const revealText = useCallback(() => {
         setIsScrambling(true);
         let iteration = 0;
 
@@ -54,7 +57,7 @@ export default function DecryptedText({
                     .join("");
             });
             if (sequential) {
-                iteration += 1 / 3; 
+                iteration += 1 / 3;
             } else {
                 iteration += 1;
             }
@@ -65,16 +68,17 @@ export default function DecryptedText({
             }
         }, speed);
         return () => clearInterval(interval);
-    };
+    }, [text, speed, sequential, useOriginalCharsOnly, characters]);
 
     useEffect(() => {
-        if (animateOn === "view" && isInView && !isScrambling) {
-             const timeout = setTimeout(() => {
-                 revealText();
-             }, delay * 1000);
-             return () => clearTimeout(timeout);
+        if (animateOn === "view" && isInView && !isScrambling && !hasAnimated) {
+            const timeout = setTimeout(() => {
+                setHasAnimated(true);
+                revealText();
+            }, delay * 1000);
+            return () => clearTimeout(timeout);
         }
-    }, [isInView, animateOn, delay]);
+    }, [isInView, animateOn, delay, isScrambling, revealText, hasAnimated]);
 
     const handleMouseEnter = () => {
         if (animateOn === "hover") revealText();
@@ -85,6 +89,7 @@ export default function DecryptedText({
             ref={containerRef}
             className={cn("inline-block whitespace-pre-wrap", parentClassName)}
             onMouseEnter={handleMouseEnter}
+            style={style}
         >
             <span className={cn("inline-block", className)}>{displayText}</span>
         </motion.span>

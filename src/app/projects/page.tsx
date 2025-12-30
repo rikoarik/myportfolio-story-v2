@@ -5,6 +5,7 @@ import { ArrowUpRight, Github, ChevronLeft, MapPin, CreditCard, LayoutTemplate, 
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
 
 const projects = [
     {
@@ -98,17 +99,26 @@ const projects = [
 ];
 
 export default function Projects() {
+    const { theme } = useTheme();
+    
     return (
-        <main className="cursor-none bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-orange-500/30">
+        <main 
+            className="cursor-none min-h-screen font-sans" 
+            style={{ 
+                backgroundColor: theme.bgPrimary, 
+                color: theme.textPrimary,
+                transition: 'background-color 1s ease, color 1s ease'
+            }}
+        >
             <CursorTracker />
 
             {/* Navigation */}
-            <div className="fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center bg-slate-50/90 backdrop-blur-sm border-b border-slate-200">
-                <Link href="/" className="flex items-center gap-2 text-slate-500 hover:text-orange-500 transition-colors uppercase font-mono text-xs tracking-widest font-bold">
+            <div className="fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center backdrop-blur-sm border-b" style={{ backgroundColor: theme.bgPrimary + 'E6', borderColor: theme.border }}>
+                <Link href="/" className="flex items-center gap-2 transition-colors uppercase font-mono text-xs tracking-widest font-bold" style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>
                     <ChevronLeft size={16} />
                     Back to Portfolio
                 </Link>
-                <div className="font-mono text-xs text-slate-400">PHYSICAL PROOF</div>
+                <div className="font-mono text-xs" style={{ color: theme.textSecondary }}>PHYSICAL PROOF</div>
             </div>
 
             <div className="max-w-4xl mx-auto px-6 md:px-12 pt-32 pb-24">
@@ -117,7 +127,8 @@ export default function Projects() {
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-xs font-mono uppercase tracking-widest text-emerald-600 block mb-4"
+                        className="text-xs font-mono uppercase tracking-widest block mb-4"
+                        style={{ color: theme.accent }}
                     >
                         Selected Works
                     </motion.span>
@@ -125,15 +136,17 @@ export default function Projects() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900 mb-6"
+                        className="text-5xl md:text-7xl font-black tracking-tighter mb-6"
+                        style={{ color: theme.textPrimary }}
                     >
-                        EXTENSIVE <span className="text-emerald-500">WORK.</span>
+                        EXTENSIVE <span style={{ color: theme.accent }}>WORK.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-slate-600 max-w-2xl leading-relaxed"
+                        className="text-xl max-w-2xl leading-relaxed"
+                        style={{ color: theme.textSecondary }}
                     >
                         A mix of Enterprise Production Apps handling real revenue and Open Source explorations pushing technical boundaries.
                     </motion.p>
@@ -144,7 +157,8 @@ export default function Projects() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="w-full h-64 md:h-96 bg-slate-100 rounded-3xl mb-24 overflow-hidden border border-slate-200 relative group"
+                    className="w-full h-64 md:h-96 rounded-3xl mb-24 overflow-hidden relative group"
+                    style={{ backgroundColor: theme.bgSecondary, borderColor: theme.border, borderWidth: '1px', borderStyle: 'solid' }}
                 >
                     <Image
                         src="/assets/mobile_ui_mockup.png"
@@ -168,24 +182,24 @@ export default function Projects() {
                             transition={{ duration: 0.6 }}
                             className="group"
                         >
-                            <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-8 border-b border-slate-200 pb-8">
+                            <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-8 border-b pb-8" style={{ borderColor: theme.border }}>
                                 <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-slate-100 rounded-xl text-slate-600 mt-1">
+                                    <div className="p-3 rounded-xl mt-1" style={{ backgroundColor: theme.bgSecondary, color: theme.textSecondary }}>
                                         <project.icon size={24} />
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-3 mb-2">
-                                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">{project.title}</h2>
+                                            <h2 className="text-3xl md:text-4xl font-bold" style={{ color: theme.textPrimary }}>{project.title}</h2>
                                             {project.type === "playstore" && (
-                                                <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wide border border-emerald-200">Live</span>
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border" style={{ backgroundColor: theme.accent + '20', color: theme.accent, borderColor: theme.accent + '40' }}>Live</span>
                                             )}
                                         </div>
-                                        <p className="text-slate-500 font-mono text-sm">{project.subtitle}</p>
+                                        <p className="font-mono text-sm" style={{ color: theme.textSecondary }}>{project.subtitle}</p>
                                     </div>
                                 </div>
                                 <div className="mt-4 md:mt-0 flex gap-2 flex-wrap justify-end max-w-md">
                                     {project.tags.map(tag => (
-                                        <span key={tag} className="px-3 py-1 rounded-full bg-slate-100 text-xs font-bold text-slate-600 border border-slate-200">
+                                        <span key={tag} className="px-3 py-1 rounded-full text-xs font-bold border" style={{ backgroundColor: theme.bgSecondary, color: theme.textSecondary, borderColor: theme.border }}>
                                             {tag}
                                         </span>
                                     ))}
@@ -194,24 +208,24 @@ export default function Projects() {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                                 <div>
-                                    <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">The Problem</p>
-                                    <p className="text-slate-700 leading-relaxed text-sm">
+                                    <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: theme.textSecondary }}>The Problem</p>
+                                    <p className="leading-relaxed text-sm" style={{ color: theme.textPrimary }}>
                                         {project.problem}
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Technical Solution</p>
-                                    <p className="text-slate-700 leading-relaxed text-sm">
+                                    <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: theme.textSecondary }}>Technical Solution</p>
+                                    <p className="leading-relaxed text-sm" style={{ color: theme.textPrimary }}>
                                         {project.solution}
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">The Result</p>
-                                    <p className="text-slate-800 font-medium leading-relaxed text-sm mb-4">
+                                    <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: theme.textSecondary }}>The Result</p>
+                                    <p className="font-medium leading-relaxed text-sm mb-4" style={{ color: theme.textPrimary }}>
                                         {project.result}
                                     </p>
                                     {project.link !== "#" && (
-                                        <Link href={project.link} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-emerald-500 transition-colors uppercase tracking-wider">
+                                        <Link href={project.link} target="_blank" className="inline-flex items-center gap-2 text-sm font-bold transition-colors uppercase tracking-wider" style={{ color: theme.textPrimary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textPrimary}>
                                             {project.type === "playstore" ? "View on Play Store" : "View Code"} <ArrowUpRight size={16} />
                                         </Link>
                                     )}
@@ -222,9 +236,9 @@ export default function Projects() {
                 </div>
 
                 {/* Footer Call to Action */}
-                <div className="mt-32 pt-16 border-t border-slate-200 text-center">
-                    <p className="text-slate-400 mb-4">Explore 30+ other repositories</p>
-                    <a href="https://github.com/rikoarik" target="_blank" className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-full font-bold hover:bg-emerald-600 transition-colors">
+                <div className="mt-32 pt-16 border-t text-center" style={{ borderColor: theme.border }}>
+                    <p className="mb-4" style={{ color: theme.textSecondary }}>Explore 30+ other repositories</p>
+                    <a href="https://github.com/rikoarik" target="_blank" className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-colors" style={{ backgroundColor: theme.bgSecondary, color: theme.textPrimary }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.accent} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.bgSecondary}>
                         <Github size={20} />
                         Visit GitHub Profile
                     </a>

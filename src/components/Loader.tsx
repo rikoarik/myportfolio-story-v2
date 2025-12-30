@@ -36,35 +36,7 @@ function getSunPosition(): { position: number; phase: 'night' | 'sunrise' | 'day
     }
 }
 
-// Get gradient colors based on time of day
-function getGradientColors(phase: 'night' | 'sunrise' | 'day' | 'sunset') {
-    switch (phase) {
-        case 'night':
-            return {
-                sky: ['#0a0a1a', '#1a1a2e'],
-                sun: ['#c0c0c0', '#808080'],
-                foreground: '#1a1a2e'
-            };
-        case 'sunrise':
-            return {
-                sky: ['#ff9a56', '#ffcd67', '#87ceeb'],
-                sun: ['#ff6b35', '#ffa500', '#ffcc00'],
-                foreground: '#2D4263'
-            };
-        case 'day':
-            return {
-                sky: ['#87ceeb', '#e0f6ff'],
-                sun: ['#ffcc00', '#fff176'],
-                foreground: '#2D4263'
-            };
-        case 'sunset':
-            return {
-                sky: ['#1a1a2e', '#c84b31', '#ff9a56'],
-                sun: ['#ff4500', '#ff6347', '#ffa07a'],
-                foreground: '#191919'
-            };
-    }
-}
+
 
 export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () => void }) {
     const [complete, setComplete] = useState(false);
@@ -72,7 +44,8 @@ export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () =
     const { theme } = useTheme();
 
     const sunData = getSunPosition();
-    const colors = getGradientColors(sunData.phase);
+
+
 
     // Calculate sun's vertical position (lower = higher in sky)
     // During loading, sun rises from 70% (below horizon) to final position
@@ -117,7 +90,7 @@ export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () =
                         animate={{ opacity: 1 }}
                         transition={{ duration: 2 }}
                         style={{
-                            background: `linear-gradient(to top, ${colors.sky.join(', ')})`
+                            background: `linear-gradient(to top, ${theme.bgPrimary}, ${theme.bgSecondary})`
                         }}
                     />
 
@@ -127,8 +100,8 @@ export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () =
                         style={{
                             width: 'min(40vw, 200px)',
                             height: 'min(40vw, 200px)',
-                            background: `radial-gradient(circle, ${colors.sun[0]} 0%, ${colors.sun[1] || colors.sun[0]} 50%, ${colors.sun[2] || colors.sun[1] || colors.sun[0]} 100%)`,
-                            boxShadow: `0 0 60px ${colors.sun[0]}80, 0 0 120px ${colors.sun[0]}40`,
+                            background: `radial-gradient(circle, ${theme.accent} 0%, ${theme.accent}80 50%, ${theme.accent}00 100%)`,
+                            boxShadow: `0 0 60px ${theme.accent}66, 0 0 120px ${theme.accent}33`,
                             top: `${currentSunTop}%`,
                         }}
                         initial={{ top: "70%" }}
@@ -139,7 +112,7 @@ export default function Loader({ onLoadingComplete }: { onLoadingComplete?: () =
                     {/* LAYER 2: Foreground (Bottom 50%) */}
                     <div
                         className="absolute bottom-0 w-full h-[50%] z-20 flex flex-col items-center justify-start pt-12 md:pt-16 overflow-hidden"
-                        style={{ backgroundColor: colors.foreground }}
+                        style={{ backgroundColor: theme.bgSecondary }}
                     >
                         {/* Horizon line */}
                         <div

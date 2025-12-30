@@ -8,9 +8,10 @@ interface ScrollAnimatedCardProps {
     className?: string;
     delay?: number;
     direction?: "up" | "left" | "right";
+    style?: React.CSSProperties;
 }
 
-export default function ScrollAnimatedCard({ children, className = "", delay = 0, direction = "up" }: ScrollAnimatedCardProps) {
+export default function ScrollAnimatedCard({ children, className = "", delay = 0, direction = "up", style }: ScrollAnimatedCardProps) {
     // Define initial positions based on direction
     const initialMap = {
         up: { y: 100, x: 0, rotateX: 20 },
@@ -51,6 +52,7 @@ export default function ScrollAnimatedCard({ children, className = "", delay = 0
                 transition: { type: "spring", stiffness: 300, damping: 15 }
             }}
             className={className}
+            style={style}
         >
             {children}
         </motion.div>

@@ -15,6 +15,7 @@ interface CountUpProps {
     separator?: string;
     prefix?: string;
     suffix?: string;
+    style?: React.CSSProperties;
 }
 
 export default function CountUp({
@@ -27,6 +28,7 @@ export default function CountUp({
     separator = "",
     prefix = "",
     suffix = "",
+    style,
 }: CountUpProps) {
     const ref = useRef<HTMLSpanElement>(null);
     const motionValue = useMotionValue(from);
@@ -54,7 +56,7 @@ export default function CountUp({
     }, [springValue]);
 
     return (
-        <span ref={ref} className={cn("inline-block tabular-nums", className)}>
+        <span ref={ref} className={cn("inline-block tabular-nums", className)} style={style}>
             {prefix}{displayValue.toLocaleString().replace(/,/g, separator)}{suffix}
         </span>
     );

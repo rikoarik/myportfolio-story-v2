@@ -83,7 +83,7 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
             // Native vertical scroll for mobile
             const sectionIds = [
                 "foundation", "architecture", "state", "offline", "hardware",
-                "multiapp", "security", "crossplatform", "production", "refinement"
+                "multiapp", "security", "crossplatform", "production", "refinement", "future"
             ];
             const sectionId = sectionIds[sectionIndex];
             const element = document.getElementById(sectionId);
@@ -94,7 +94,7 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
         }
 
         if (singleContentWidth === 0) return;
-        const sectionWidth = singleContentWidth / 10;
+        const sectionWidth = singleContentWidth / 11;
         const newTarget = -(sectionIndex * sectionWidth);
         targetX.current = wrapValue(newTarget, singleContentWidth);
     }, [singleContentWidth, wrapValue, isMobile]);
@@ -124,8 +124,8 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
                 const normalizedProgress = Math.abs(wrappedCurrent) / singleContentWidth;
                 setProgress(normalizedProgress % 1);
 
-                // Calculate Active Index (0-9)
-                const totalSections = 10;
+                // Calculate Active Index (0-10)
+                const totalSections = 11;
                 const index = Math.floor((normalizedProgress % 1) * totalSections);
                 setActiveIndex(index);
             }
@@ -210,7 +210,21 @@ export default function HorizontalScroll({ children, overlay }: { children: Reac
     if (isMobile) {
         return (
             <HorizontalScrollContext.Provider value={{ progress, activeIndex, scrollToSection }}>
-                <div className="w-full h-full flex flex-col overflow-y-auto overflow-x-hidden relative">
+                <div
+                    className="w-full h-full flex flex-col overflow-y-auto overflow-x-hidden relative"
+                    onScroll={(e) => {
+                        const target = e.currentTarget;
+                        const scrollY = target.scrollTop;
+                        const height = target.clientHeight;
+                        const totalHeight = target.scrollHeight;
+                        const normalizedProgress = scrollY / (totalHeight - height);
+                        setProgress(normalizedProgress);
+
+                        // Calculate active index based on section height (assuming 100vh sections)
+                        const index = Math.round(scrollY / height);
+                        setActiveIndex(index);
+                    }}
+                >
                     {/* Render only one instance of children for vertical mobile layout */}
                     <div className="flex flex-col w-full">
                         {children}

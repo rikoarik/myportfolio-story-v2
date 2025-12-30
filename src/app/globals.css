@@ -6,16 +6,20 @@
 }
 
 :root {
+  /* Premium Light Theme Base */
   --background: #ffffff;
-  --foreground: #171717;
+  /* White */
+  --foreground: #09090b;
+  /* Zinc-950 */
 
-  /* Semantic Colors */
-  --color-primary: #171717;
-  --color-accent: #f97316;
-  /* orange-500 */
-  --color-surface: #ffffff;
-  --color-surface-dim: #f8fafc;
-  /* slate-50 */
+  /* Semantic Colors - Updated for Light Mode High Contrast */
+  --color-primary: #09090b;
+  --color-accent: #06b6d4;
+  /* Cyan-500 */
+  --color-surface: #f8fafc;
+  /* Slate-50 */
+  --color-surface-dim: #f1f5f9;
+  /* Slate-100 */
 }
 
 /* 
@@ -127,4 +131,128 @@ html.lenis body {
 /* Slower duration for card content */
 .animate-marquee-slow {
   animation: marquee 40s linear infinite;
+}
+
+/* ============================================
+   ComPsych-Inspired Design System
+   ============================================ */
+
+/* Typography System */
+.compsych-display {
+  font-size: clamp(4rem, 12vw, 8rem);
+  line-height: 0.9;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.compsych-heading {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.compsych-subheading {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.compsych-body {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.compsych-body-large {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Spacing Utilities */
+.compsych-section-spacing {
+  padding-block: clamp(6rem, 15vh, 10rem);
+}
+
+.compsych-container {
+  padding-inline: clamp(2rem, 5vw, 8rem);
+}
+
+.compsych-vertical-spacing {
+  padding-block: clamp(3rem, 8vh, 6rem);
+}
+
+.compsych-horizontal-spacing {
+  padding-inline: clamp(1.5rem, 4vw, 4rem);
+}
+
+/* Smooth Transitions */
+.section-transition {
+  transition: background-color 1.5s ease, color 1.5s ease;
+}
+
+.theme-transition {
+  transition: all 0.3s ease;
+}
+
+.smooth-color-transition {
+  transition: background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Blob Animation for Decorative Elements */
+@keyframes blob {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Parallax Container */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  transform: translateZ(-1px) scale(2);
+}
+
+/* Glassmorphism Effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Section Number Styling */
+.section-number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }

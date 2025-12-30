@@ -23,7 +23,8 @@ export const dictionary = {
             security: "Security",
             crossplatform: "Cross-Platform",
             production: "Production",
-            refinement: "Refinement"
+            refinement: "Refinement",
+            future: "Future Projects"
         },
         page: {
             foundation: {
@@ -128,6 +129,42 @@ export const dictionary = {
                     { title: "Relay", desc: "Understandable by other engineers." }
                 ],
                 footer: "Work Continues"
+            },
+            future: {
+                label: "11 Future Projects",
+                title_1: "WHAT'S",
+                title_2: "NEXT",
+                desc: "Projects in development. Ideas taking shape. The journey continues.",
+                projects: [
+                    {
+                        title: "AI-Powered Code Assistant",
+                        subtitle: "Intelligent Development Tool",
+                        status: "In Planning",
+                        desc: "An AI-powered tool that understands codebase context and provides intelligent suggestions for Android development.",
+                        tags: ["AI/ML", "Kotlin", "IDE Plugin"]
+                    },
+                    {
+                        title: "Cross-Platform Design System",
+                        subtitle: "Unified Component Library",
+                        status: "In Development",
+                        desc: "A comprehensive design system that works seamlessly across Android, iOS, Flutter, and React Native.",
+                        tags: ["Design System", "Multi-Platform", "TypeScript"]
+                    },
+                    {
+                        title: "Real-Time Collaboration Platform",
+                        subtitle: "Developer Workspace",
+                        status: "Concept",
+                        desc: "A platform for real-time code collaboration, pair programming, and team coordination for mobile development teams.",
+                        tags: ["WebRTC", "Real-Time", "Collaboration"]
+                    },
+                    {
+                        title: "Performance Monitoring Suite",
+                        subtitle: "Production Analytics",
+                        status: "In Planning",
+                        desc: "Advanced performance monitoring and analytics tool specifically designed for mobile applications in production.",
+                        tags: ["Analytics", "Performance", "Monitoring"]
+                    }
+                ]
             }
         }
     },
@@ -155,7 +192,8 @@ export const dictionary = {
             security: "Keamanan",
             crossplatform: "Lintas Platform",
             production: "Produksi",
-            refinement: "Penyempurnaan"
+            refinement: "Penyempurnaan",
+            future: "Proyek Masa Depan"
         },
         page: {
             foundation: {
@@ -260,6 +298,42 @@ export const dictionary = {
                     { title: "Estafet", desc: "Agar dimengerti engineer lain." }
                 ],
                 footer: "Pekerjaan Berlanjut"
+            },
+            future: {
+                label: "11 Proyek Masa Depan",
+                title_1: "APA",
+                title_2: "SELANJUTNYA",
+                desc: "Proyek yang sedang dikembangkan. Ide yang mulai terbentuk. Perjalanan terus berlanjut.",
+                projects: [
+                    {
+                        title: "Asisten Kode Berbasis AI",
+                        subtitle: "Alat Pengembangan Cerdas",
+                        status: "Dalam Perencanaan",
+                        desc: "Alat berbasis AI yang memahami konteks codebase dan memberikan saran cerdas untuk pengembangan Android.",
+                        tags: ["AI/ML", "Kotlin", "Plugin IDE"]
+                    },
+                    {
+                        title: "Sistem Desain Lintas Platform",
+                        subtitle: "Pustaka Komponen Terpadu",
+                        status: "Dalam Pengembangan",
+                        desc: "Sistem desain komprehensif yang bekerja mulus di Android, iOS, Flutter, dan React Native.",
+                        tags: ["Design System", "Multi-Platform", "TypeScript"]
+                    },
+                    {
+                        title: "Platform Kolaborasi Real-Time",
+                        subtitle: "Workspace Developer",
+                        status: "Konsep",
+                        desc: "Platform untuk kolaborasi kode real-time, pair programming, dan koordinasi tim untuk tim pengembangan mobile.",
+                        tags: ["WebRTC", "Real-Time", "Kolaborasi"]
+                    },
+                    {
+                        title: "Suite Monitoring Performa",
+                        subtitle: "Analitik Produksi",
+                        status: "Dalam Perencanaan",
+                        desc: "Alat monitoring dan analitik performa canggih yang dirancang khusus untuk aplikasi mobile di produksi.",
+                        tags: ["Analitik", "Performa", "Monitoring"]
+                    }
+                ]
             }
         }
     }
